@@ -1,80 +1,87 @@
 package br.univille.estd.binarytree;
 
-/**
- * Implementacao de uma árvore binária usando estrutura encadeada
- * @author leandersonandre
- *
- * @param <E>
- */
 public class LinkedBinaryTree<E> {
 
 	protected BTPosition<E> root; // Referencia para a raiz
 	protected int size;           // Numero de nodos
 
 	/**
-	 * Construtor de uma árvore vazia
+	 * Construtor de uma arvore vazia
 	 */
 	public LinkedBinaryTree() {
-		root = null; // inicia com uma árvore vazia
+		root = null; // inicia com uma arvore vazia
 		size = 0;
 	}
 
 	/**
-	 * Retorna o numero de nodos da árvore
+	 * Retorna o numero de nodos da arvore
 	 * @return
 	 */
 	public int size() {
-		return -1;
+		return size;
 	}
 
 	/**
-	 * Retorna se um nodo é interno
+	 * Retorna se um nodo e interno
 	 */
-	public boolean isInternal(BTPosition<E> v) throws InvalidPositionException{
-		return false;
+	public boolean isInternal(BTPosition<E> v) throws InvalidPositionException {
+		if (v == null)
+			throw new InvalidPositionException.POSITION_CANNOT_BE_NULL;
+
+		if (v.getRight() != null || v.getLeft() != null)
+			return true;
+
+		else
+			return false;
 	}
 
 
 	/**
-	 * Retorna se um nodo é externo
+	 * Retorna se um nodo e externo
 	 */
-	public boolean isExternal(BTPosition<E> v) throws InvalidPositionException{
-		return false;
+	public boolean isExternal(BTPosition<E> v) throws InvalidPositionException {
+		if (v == null)
+			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
+
+		return !isInternal(v);
 	}
 
 	/**
-	 * Retorna se um nodo é a raiz
+	 * Retorna se um nodo e a raiz
 	 */
-	public boolean isRoot(BTPosition<E> v) throws InvalidPositionException{
-		return false;
+	public boolean isRoot(BTPosition<E> v) throws InvalidPositionException {
+		if (v == null)
+			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
+
+		return v.equals(root);
 	}
 	/**
 	 * Retorna se um nodo tem o filho da esquerda
 	 */
-	public boolean hasLeft(BTPosition<E> v) throws InvalidPositionException{
-		if (v == null) {
+	public boolean hasLeft(BTPosition<E> v) throws InvalidPositionException {
+		if (v == null)
 			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
-		}
+
 		return v.getLeft() != null;
 	}
 
 	/**
 	 * Retorna se um nodo tem o filho da direita
 	 */
-	public boolean hasRight(BTPosition<E> v) throws InvalidPositionException{
-		if (v == null) {
+	public boolean hasRight(BTPosition<E> v) throws InvalidPositionException {
+		if (v == null)
 			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
-		}
+
 		return v.getRight() != null;
 	}
 
 	/**
 	 * Retorna a raiz da arvore
 	 */
-	public BTPosition<E> root() throws EmptyTreeException{
-		if (root == null) {
+	public BTPosition<E> root() throws EmptyTreeException {
+		if (root == null)
 			throw new EmptyTreeException("Arvore vazia");
-		}
+
 		return root;
 	}
 
@@ -82,10 +89,10 @@ public class LinkedBinaryTree<E> {
 	 * Retorna o filho da esquerda de um nodo
 	 * Lanca BoundaryViolationException se nao tiver filho da esquerda
 	 */
-	public BTPosition<E> left(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException{
-		if (v.getLeft() == null) {
+	public BTPosition<E> left(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException {
+		if (v.getLeft() == null)
 			throw new BoundaryViolationException("There's no left child");
-		}
+
 		return v.getLeft();
 	}
 
@@ -93,10 +100,10 @@ public class LinkedBinaryTree<E> {
 	 * Retorna o filho da direita de um nodo
 	 * Lanca BoundaryViolationException se nao tiver filho da direita
 	 */
-	public BTPosition<E> right(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException{
-		if (v.getRight() == null) {
+	public BTPosition<E> right(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException {
+		if (v.getRight() == null)
 			throw new BoundaryViolationException("There's no right child");
-		}
+
 		return v.getRight();
 	}
 
@@ -105,9 +112,9 @@ public class LinkedBinaryTree<E> {
 	 * Lanca BoundaryViolationException se nao tiver pai
 	 */
 	public BTPosition<E> parent(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException{
-		if (v == root) {
+		if (v == root)
 			throw new BoundaryViolationException("It's an orphan root");
-		}
+
 		return v.getParent();
 	}
 
@@ -115,7 +122,10 @@ public class LinkedBinaryTree<E> {
 	 * Substitui o elemento armazenado no nodo
 	 * Retorna o elemento substituido
 	 */
-	public E replace(BTPosition<E> v, E o) throws InvalidPositionException{
+	public E replace(BTPosition<E> v, E o) throws InvalidPositionException {
+		if (v == null)
+			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
+
 		E replaced = v.getElement();
 		v.setElement(o);
 		return replaced;
@@ -125,7 +135,7 @@ public class LinkedBinaryTree<E> {
 	 * Retorna o irmao de um nodo
 	 * Lanca BoundaryViolationException se nao tiver um irmao
 	 */
-	public BTPosition<E> sibling(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException{
+	public BTPosition<E> sibling(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException {
 		if (v == null)
 			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
 
@@ -147,7 +157,7 @@ public class LinkedBinaryTree<E> {
 	/**
 	 * Insere a raiz em uma arvore vazia
 	 */
-	public BTPosition<E> addRoot(E e) throws NonEmptyTreeException{
+	public BTPosition<E> addRoot(E e) throws NonEmptyTreeException {
 		if (root != null)
 			throw new NonEmptyTreeException("Tree isn't empty");
 		size++;
@@ -157,9 +167,10 @@ public class LinkedBinaryTree<E> {
 	/**
 	 * Insere o filho da esquerda em um nodo
 	 */
-	public BTPosition<E> insertLeft(BTPosition<E> v, E e) throws InvalidPositionException{
+	public BTPosition<E> insertLeft(BTPosition<E> v, E e) throws InvalidPositionException {
 		if (v == null)
 			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
+
 		BTPosition<E> position = new BTPosition<>(e);
 		v.setLeft(position);
 		return position;
@@ -168,9 +179,10 @@ public class LinkedBinaryTree<E> {
 	/**
 	 * Insere o filho da direita em um nodo
 	 */
-	public BTPosition<E> insertRight(BTPosition<E> v, E e) throws InvalidPositionException{
+	public BTPosition<E> insertRight(BTPosition<E> v, E e) throws InvalidPositionException {
 		if (v == null)
 			throw new InvalidPositionException(InvalidPositionException.POSITION_CANNOT_BE_NULL);
+
 		BTPosition<E> position = new BTPosition<>(e);
 		v.setRight(position);
 		return position;
@@ -180,22 +192,27 @@ public class LinkedBinaryTree<E> {
 	 * Remove um nodo com zero ou um filho
 	 * Nao pode remover um nodo com dois filhos. Deve lancar InvalidPositionException
 	 */
-	public E remove(BTPosition<E> v) throws InvalidPositionException{
+	public E remove(BTPosition<E> v) throws InvalidPositionException {
 		if (v.hasBothChilds())
 			throw new InvalidPositionException(InvalidPositionException.POSITION_HAS_CHILDREN);
+
 		if (v == null)
 			throw new InvalidPositionException(InvlidPositionException.POSITION_CANNOT_BE_NULL);
+
 		if (v.getParent() != null){
-			if (v.e	)
+			if (v.equals(v.getParent().getLeft()))
+				v.getParent().setLeft(null);
 		}
-		return null;
+		size -= 1;
+		return v.getElement();
 	}
 
 	/**
 	 *  Cria um novo nodo para a arvore binaria
 	 */
 	protected BTPosition<E> createNode(E element, BTPosition<E> parent, BTPosition<E> left, BTPosition<E> right) {
-		return null;
+		size++;
+		return new BTPosition<>(E, parent, left, right);
 	}
 
 }
